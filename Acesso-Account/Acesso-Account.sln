@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31229.75
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Services", "1 - Services", "{A4930EDF-8734-48F7-85FA-587666670C75}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acesso.Services.FundTransferAPI", "Services\Acesso.Services.FundTransferAPI\Acesso.Services.FundTransferAPI.csproj", "{7E89E681-6A23-406F-860E-7CB7C5EA1ED2}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1E0D9584-6CBB-4A16-A751-927C2CD0403E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Broker", "2 - Broker", "{0DA9E7B9-B6C8-48E2-BB6F-DD553FA50C42}"
+	ProjectSection(SolutionItems) = preProject
+		Broker\definitions.json = Broker\definitions.json
+		Broker\rabbitmq.conf = Broker\rabbitmq.conf
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E89E681-6A23-406F-860E-7CB7C5EA1ED2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E89E681-6A23-406F-860E-7CB7C5EA1ED2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E89E681-6A23-406F-860E-7CB7C5EA1ED2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E89E681-6A23-406F-860E-7CB7C5EA1ED2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E0D9584-6CBB-4A16-A751-927C2CD0403E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E0D9584-6CBB-4A16-A751-927C2CD0403E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E0D9584-6CBB-4A16-A751-927C2CD0403E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E0D9584-6CBB-4A16-A751-927C2CD0403E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7E89E681-6A23-406F-860E-7CB7C5EA1ED2} = {A4930EDF-8734-48F7-85FA-587666670C75}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A18C3552-E4F2-44E0-8D01-0B3D374D1E95}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,79 @@
+{
+  "rabbit_version": "3.8.16",
+  "rabbitmq_version": "3.8.16",
+  "product_name": "RabbitMQ",
+  "product_version": "3.8.16",
+  "users": [
+    {
+      "name": "acesso",
+      "password": "acesso",
+      "tags": "administrator",
+      "limits": {
+
+      }
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "/"
+    }
+  ],
+  "permissions": [
+    {
+      "user": "acesso",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "topic_permissions": [
+
+  ],
+  "parameters": [
+
+  ],
+  "global_parameters": [
+    {
+      "name": "cluster_name",
+      "value": "rabbit@rabbitmq"
+    },
+    {
+      "name": "internal_cluster_id",
+      "value": "rabbitmq-cluster-id-VU528VI5pTwJPGFOxqbGcw"
+    }
+  ],
+  "policies": [
+
+  ],
+  "queues": [
+    {
+      "name": "q.fundtransfer.requested",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "fund.exchange",
+      "vhost": "/",
+      "type": "direct",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "bindings": [
+    {
+      "source": "fund.exchange",
+      "vhost": "/",
+      "destination": "q.fundtransfer.requested",
+      "destination_type": "queue",
+      "routing_key": "q.fundtransfer.requested.#",
+      "arguments": {}
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+
+# API Fund-Transfer
+  acesso.services.fundtransferapi:
+    image: ${DOCKER_REGISTRY-}acessoservicesfundtransferapi    
+    build:
+      context: .
+      dockerfile: Services/Acesso.Services.FundTransferAPI/Dockerfile
+    depends_on:
+        - rabbitmq
+
+# RabbitMQ
+  rabbitmq:
+    image: rabbitmq:3.8-management    
+    container_name: 'rabbitmq'    
+    hostname: rabbitmq
