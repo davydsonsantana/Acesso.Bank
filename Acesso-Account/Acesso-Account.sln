@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Broker", "2 - Broker", "{0DA9E7B9-B6C8-48E2-BB6F-DD553FA50C42}"
 	ProjectSection(SolutionItems) = preProject
 		Broker\definitions.json = Broker\definitions.json
+		Broker\Dockerfile = Broker\Dockerfile
 		Broker\rabbitmq.conf = Broker\rabbitmq.conf
 	EndProjectSection
 EndProject

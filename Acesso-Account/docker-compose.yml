@@ -13,6 +13,9 @@ services:
 
 # RabbitMQ
   rabbitmq:
-    image: rabbitmq:3.8-management    
+    image: rabbitmq:3.8-management
+    build:
+      context: .
+      dockerfile: Broker/Dockerfile
     container_name: 'rabbitmq'    
     hostname: rabbitmq

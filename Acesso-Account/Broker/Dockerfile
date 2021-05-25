@@ -1,4 +1,3 @@
-FROM rabbitmq:3.8-management-alpine
+FROM rabbitmq:3.8-management
 
-#COPY ./Broker/rabbitmq.conf /etc/rabbitmq/rabbitmq.conf
-#COPY ./Broker/definitions.json /etc/rabbitmq/definitions.json
+COPY ./Broker/definitions.json /etc/rabbitmq/definitions.json
