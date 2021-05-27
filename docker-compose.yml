@@ -1,0 +1,44 @@
+version: '3.4'
+
+services:
+
+# Service Account API
+  acesso.services.accountapi:
+    image: baldini/testacesso
+    container_name: 'services.accountapi'
+
+# Services Fund-Transfer API
+  acesso.services.fundtransferapi:
+    image: ${DOCKER_REGISTRY-}acessoservicesfundtransferapi    
+    build:
+      context: .
+      dockerfile: Services/Acesso.Services.FundTransferAPI/Dockerfile
+    container_name: 'services.fundtransferapi'
+    depends_on:
+      rabbitmq:
+        condition: service_healthy    
+
+# Consumer Fund-Transfer
+  acesso.consumer.fundtransfer:
+    image: ${DOCKER_REGISTRY-}acessoconsumerfundtransfer
+    build:
+      context: .
+      dockerfile: Services/Acesso.Consumer.FundTransfer/Dockerfile
+    container_name: 'consumer.fundtransfer'
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+# RabbitMQ
+  rabbitmq:
+    image: rabbitmq:3.8-management
+    build:
+      context: .
+      dockerfile: Broker/Dockerfile
+    container_name: 'rabbitmq'
+    hostname: rabbitmq
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:15672"]
+      interval: 5s
+      timeout: 3s
+      retries: 5

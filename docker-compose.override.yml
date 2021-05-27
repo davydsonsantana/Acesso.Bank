@@ -1,0 +1,34 @@
+version: '3.4'
+
+services:
+
+# Service Account API
+  acesso.services.accountapi:
+    ports:
+      - 5000:80
+
+# Services Fund-Transfer API
+  acesso.services.fundtransferapi:    
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+# Consumer Fund-Transfer
+    
+
+# RabbitMQ
+  rabbitmq:    
+    environment:
+      RABBITMQ_DEFAULT_USER: acesso
+      RABBITMQ_DEFAULT_PASS: acesso      
+    volumes:        
+        - ./Broker/:/var/log/rabbitmq/
+    ports:
+      - 5672:5672
+      - 15672:15672
