@@ -5,6 +5,10 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
+# healthcheck
+RUN apt-get update
+RUN apt-get install -y curl 
+
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["Services/Acesso.Services.FundTransferAPI/Acesso.Services.FundTransferAPI.csproj", "Services/Acesso.Services.FundTransferAPI/"]

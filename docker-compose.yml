@@ -29,6 +29,7 @@ services:
       rabbitmq:
         condition: service_healthy
 
+
 # RabbitMQ
   rabbitmq:
     image: rabbitmq:3.8-management

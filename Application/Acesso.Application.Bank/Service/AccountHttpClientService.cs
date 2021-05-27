@@ -12,15 +12,21 @@ using System.Net.Http.Json;
 using System.Net.Http;
 
 namespace Acesso.Application.Bank.Service {
-    public class AccountService : IAccountService {
+    public class AccountHttpClientService : IAccountHttpClientService {
 
-        public AccountService() {
-            
+        private readonly HttpClient _httpClient;
+
+        public AccountHttpClientService(HttpClient httpClient) {
+            _httpClient = httpClient;
+        }
+                
+        public async Task<AccountVM> Get(string accountNumber) {
+            string url = "http://services.accountapi/api/Account/" + accountNumber;
+            return await _httpClient.GetFromJsonAsync<AccountVM>(url);
         }
 
         public void Dispose() {
             GC.SuppressFinalize(this);
         }
-    
     }
 }

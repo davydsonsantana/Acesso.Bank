@@ -14,10 +14,10 @@ namespace Acesso.Application.Bank.Service {
     public class FundTransferService : IFundTransferService {
         
         private readonly ConnectionFactory _factory;
-        private readonly IAccountService _accountService;
+        private readonly IAccountHttpClientService _accountHttpClientService;
                 
-        public FundTransferService(IAccountService accountService) {
-            _accountService = accountService;
+        public FundTransferService(IAccountHttpClientService accountHttpClientService) {
+            _accountHttpClientService = accountHttpClientService;
             _factory = new ConnectionFactory();
             _factory.UserName = "acesso";
             _factory.Password = "acesso";
@@ -71,8 +71,8 @@ namespace Acesso.Application.Bank.Service {
                 var fundTransferQueueVM = JsonSerializer.Deserialize<FundTransferQueueVM>(message);
                     Console.WriteLine(" [x] Received {0}", message);
                 
-                var accountOrigin = await _accountService.Get(fundTransferQueueVM.accountOrigin);
-                var accountDestination = await _accountService.Get(fundTransferQueueVM.accountDestination);
+                var accountOrigin = await _accountHttpClientService.Get(fundTransferQueueVM.accountOrigin);
+                var accountDestination = await _accountHttpClientService.Get(fundTransferQueueVM.accountDestination);
                 
                 ((AsyncDefaultBasicConsumer)sender).Model.BasicAck(ea.DeliveryTag, false);
             } catch (Exception ex) {

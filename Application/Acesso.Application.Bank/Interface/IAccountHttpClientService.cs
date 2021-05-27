@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Acesso.Application.Bank.Interface {
-    public interface IAccountService : IDisposable {
+    public interface IAccountHttpClientService : IDisposable {
 
-        
+        Task<AccountVM> Get(string accountNumber);
 
     }
 }
