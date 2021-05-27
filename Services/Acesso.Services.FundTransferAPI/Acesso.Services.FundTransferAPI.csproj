@@ -18,4 +18,10 @@
     <ProjectReference Include="..\..\Infra\Acesso.Infra.CrossCutting.IoC\Acesso.Infra.CrossCutting.IoC.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

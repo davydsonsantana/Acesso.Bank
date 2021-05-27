@@ -1,6 +1,5 @@
 using Acesso.Application.Bank.ViewModel;
 using System.Net.Http;
-using Acesso.Infra.Helper;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;

@@ -38,9 +38,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acesso.Infra.Data", "Infra\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acesso.Consumer.FundTransfer", "Services\Acesso.Consumer.FundTransfer\Acesso.Consumer.FundTransfer.csproj", "{A367498A-0307-4629-8FDB-DE8260F2B262}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Helpers", "Helpers", "{72A049F6-837A-4D66-BAFE-896D3F83804D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "99 - Database", "99 - Database", "{83F3897C-9EF0-4B64-8E2A-4C8E7D886036}"
+	ProjectSection(SolutionItems) = preProject
+		Database\Dockerfile = Database\Dockerfile
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acesso.Infra.Helper", "Infra\Acesso.Infra.Helper\Acesso.Infra.Helper.csproj", "{7B51D92F-9ED7-40F0-B0B1-6E8D1E25459D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acesso.Domain.Bank", "Domain\Acesso.Domain.Bank\Acesso.Domain.Bank.csproj", "{D826BA89-1F42-44AF-B466-060832ACC1E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,10 +75,10 @@ Global
 		{A367498A-0307-4629-8FDB-DE8260F2B262}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A367498A-0307-4629-8FDB-DE8260F2B262}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A367498A-0307-4629-8FDB-DE8260F2B262}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7B51D92F-9ED7-40F0-B0B1-6E8D1E25459D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7B51D92F-9ED7-40F0-B0B1-6E8D1E25459D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7B51D92F-9ED7-40F0-B0B1-6E8D1E25459D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7B51D92F-9ED7-40F0-B0B1-6E8D1E25459D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D826BA89-1F42-44AF-B466-060832ACC1E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D826BA89-1F42-44AF-B466-060832ACC1E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D826BA89-1F42-44AF-B466-060832ACC1E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D826BA89-1F42-44AF-B466-060832ACC1E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,8 +93,7 @@ Global
 		{611CC2ED-FF98-4BCA-8938-82750F33E6D2} = {E13F217D-FB1B-4A9C-87A1-DFB988AADEC7}
 		{8F1F0076-DAA1-4B08-BCD7-2CE44E64BB29} = {611CC2ED-FF98-4BCA-8938-82750F33E6D2}
 		{A367498A-0307-4629-8FDB-DE8260F2B262} = {533574CD-6310-4B64-9911-C4533717694B}
-		{72A049F6-837A-4D66-BAFE-896D3F83804D} = {E13F217D-FB1B-4A9C-87A1-DFB988AADEC7}
-		{7B51D92F-9ED7-40F0-B0B1-6E8D1E25459D} = {72A049F6-837A-4D66-BAFE-896D3F83804D}
+		{D826BA89-1F42-44AF-B466-060832ACC1E6} = {A6C8A607-DB24-45B3-B12E-2C223B414E00}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A18C3552-E4F2-44E0-8D01-0B3D374D1E95}

@@ -9,15 +9,19 @@ using System.Threading.Tasks;
 using Acesso.Application.Bank.Interface;
 using RabbitMQ.Client.Events;
 using System.Net.Http;
+using Acesso.Domain.Bank.Interfaces;
+using Acesso.Domain.Bank.Models;
 
 namespace Acesso.Application.Bank.Service {
     public class FundTransferService : IFundTransferService {
         
         private readonly ConnectionFactory _factory;
         private readonly IAccountHttpClientService _accountHttpClientService;
-                
-        public FundTransferService(IAccountHttpClientService accountHttpClientService) {
+        private readonly IFundTransferStatusRepository _fundTransferRepository;
+
+        public FundTransferService(IAccountHttpClientService accountHttpClientService, IFundTransferStatusRepository fundTransferRepository) {
             _accountHttpClientService = accountHttpClientService;
+            _fundTransferRepository = fundTransferRepository;
             _factory = new ConnectionFactory();
             _factory.UserName = "acesso";
             _factory.Password = "acesso";
@@ -70,7 +74,14 @@ namespace Acesso.Application.Bank.Service {
                 var message = Encoding.UTF8.GetString(body);
                 var fundTransferQueueVM = JsonSerializer.Deserialize<FundTransferQueueVM>(message);
                     Console.WriteLine(" [x] Received {0}", message);
-                
+
+                var fundTransferStatus = new FundTransferStatus() {
+                    TransactionId = fundTransferQueueVM.transactionId,
+                    Status = "Processing"
+                };
+
+                _fundTransferRepository.Add(fundTransferStatus);
+
                 var accountOrigin = await _accountHttpClientService.Get(fundTransferQueueVM.accountOrigin);
                 var accountDestination = await _accountHttpClientService.Get(fundTransferQueueVM.accountDestination);
                 

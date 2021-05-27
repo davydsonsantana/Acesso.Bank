@@ -7,7 +7,7 @@ services:
     ports:
       - 5000:80
 
-# Services Fund-Transfer API
+# Service Fund-Transfer API
   acesso.services.fundtransferapi:    
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -20,7 +20,14 @@ services:
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
 # Consumer Fund-Transfer
-    
+  acesso.consumer.fundtransfer:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+# Mongo DB
+  mongo:
+    ports:
+      - 27017:27017
 
 # RabbitMQ
   rabbitmq:    

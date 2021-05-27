@@ -29,6 +29,18 @@ services:
       rabbitmq:
         condition: service_healthy
 
+# Mongo DB
+  mongo:
+    image: mongo:4.4.6
+    build:
+      context: .
+      dockerfile: Database/Dockerfile
+    container_name: 'mongo'
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: acesso
+      MONGO_INITDB_ROOT_PASSWORD: acesso
+            
 
 # RabbitMQ
   rabbitmq:

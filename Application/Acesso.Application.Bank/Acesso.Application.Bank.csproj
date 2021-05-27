@@ -9,4 +9,9 @@
     <PackageReference Include="RabbitMQ.Client" Version="6.2.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Domain\Acesso.Domain.Bank\Acesso.Domain.Bank.csproj" />
+    <ProjectReference Include="..\..\Infra\Acesso.Infra.Data\Acesso.Infra.Data.csproj" />
+  </ItemGroup>
+
 </Project>

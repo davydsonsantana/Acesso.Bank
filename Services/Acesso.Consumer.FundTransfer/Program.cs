@@ -1,4 +1,6 @@
 using Acesso.Consumer.FundTransfer.Config;
+using Acesso.Infra.Data.Repository.Mongo;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -14,9 +16,9 @@ namespace Acesso.Consumer.FundTransfer {
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureServices((hostContext, services) => {
+                .ConfigureServices((hostContext, services) => {                    
                     // DI Abstraction
-                    services.AddDependencyInjectionConfiguration();
+                    services.AddDependencyInjectionConfiguration(hostContext.Configuration);
 
                     services.AddHostedService<Worker>();
                 });
