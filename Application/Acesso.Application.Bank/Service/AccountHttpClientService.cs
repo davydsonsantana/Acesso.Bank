@@ -19,7 +19,7 @@ namespace Acesso.Application.Bank.Service {
         public AccountHttpClientService(HttpClient httpClient) {
             _httpClient = httpClient;
         }
-                
+
         public async Task<AccountGetRequestVM> Get(string accountNumber) {
             string url = "http://services.accountapi/api/Account/" + accountNumber;
             return await _httpClient.GetFromJsonAsync<AccountGetRequestVM>(url);

@@ -8,10 +8,11 @@ using Acesso.Application.Bank.Interface;
 using RabbitMQ.Client.Events;
 using Acesso.Domain.Bank.Interfaces;
 using Acesso.Domain.Bank.Models;
+using System.Net.Http;
 
 namespace Acesso.Application.Bank.Service {
     public class FundTransferService : IFundTransferService {
-        
+
         private readonly ConnectionFactory _factory;
         private readonly IAccountHttpClientService _accountHttpClientService;
         private readonly IFundTransferStatusRepository _fundTransferRepository;
@@ -34,7 +35,7 @@ namespace Acesso.Application.Bank.Service {
             // Update Status In Queue
             SetFundTransferStatus(transactionId, "In Queue");
 
-            var fundTransferQueueVM = new FundTransferQueueVM(transactionId, fundTransferVM);            
+            var fundTransferQueueVM = new FundTransferQueueVM(transactionId, fundTransferVM);
 
             string message = JsonSerializer.Serialize(fundTransferQueueVM);
             var body = Encoding.UTF8.GetBytes(message);
@@ -56,7 +57,7 @@ namespace Acesso.Application.Bank.Service {
             using (var connection = _factory.CreateConnection())
             using (var channel = connection.CreateModel()) {
                 channel.BasicQos(0, 1, false);
-                
+
                 var consumer = new AsyncEventingBasicConsumer(channel);
                 consumer.Received += FundTransferQueueReceived;
                 channel.BasicConsume(queue: "q.fundtransfer.request",
@@ -65,33 +66,32 @@ namespace Acesso.Application.Bank.Service {
 
                 Console.ReadLine();
             }
-
         }
 
         private async Task FundTransferQueueReceived(object sender, BasicDeliverEventArgs ea) {
 
             var body = ea.Body.ToArray();
             var message = Encoding.UTF8.GetString(body);
-            var fundTransferQueueVM = JsonSerializer.Deserialize<FundTransferQueueVM>(message);            
+            var fundTransferQueueVM = JsonSerializer.Deserialize<FundTransferQueueVM>(message);
 
             try {
-                
+
                 // Update Status Processing
                 SetFundTransferStatus(fundTransferQueueVM.transactionId, "Processing");
 
                 // Get Accounts
-                var accountOrigin = await _accountHttpClientService.Get(fundTransferQueueVM.accountOrigin);
-                var accountDestination = await _accountHttpClientService.Get(fundTransferQueueVM.accountDestination);
-
-                // Credit
-                var creditRequest = new BalanceAdjustmentRequestVM() { accountNumber = accountDestination.accountNumber, value = fundTransferQueueVM.value, type = "Credit" };
-                var creditResponse = await _accountHttpClientService.TransactionRequest(creditRequest);
-                if (!creditResponse.IsSuccessStatusCode) throw new Exception("Error posting 'Credit'");
+                AccountGetRequestVM accountOrigin = await GetAccount(fundTransferQueueVM.accountOrigin);
+                AccountGetRequestVM accountDestination = await GetAccount(fundTransferQueueVM.accountDestination);
 
                 // Debit
                 var debitRequest = new BalanceAdjustmentRequestVM() { accountNumber = accountOrigin.accountNumber, value = fundTransferQueueVM.value, type = "Debit" };
                 var debitResponse = await _accountHttpClientService.TransactionRequest(debitRequest);
                 if (!debitResponse.IsSuccessStatusCode) throw new Exception("Error posting 'Debit'");
+
+                // Credit
+                var creditRequest = new BalanceAdjustmentRequestVM() { accountNumber = accountDestination.accountNumber, value = fundTransferQueueVM.value, type = "Credit" };
+                var creditResponse = await _accountHttpClientService.TransactionRequest(creditRequest);                
+                if (!creditResponse.IsSuccessStatusCode) throw new Exception("Error posting 'Credit'");
 
                 // Update Status Confirmed
                 SetFundTransferStatus(fundTransferQueueVM.transactionId, "Confirmed");
@@ -105,14 +105,13 @@ namespace Acesso.Application.Bank.Service {
                 // Update Status Error
                 SetFundTransferStatus(fundTransferQueueVM.transactionId, "Error", ex.Message);
             }
-
         }
 
         private void SetFundTransferStatus(string transactionId, string transactionStatus, string message = "") {
 
             var fundTransferStatus = _fundTransferRepository.GetByTransactionId(transactionId);
 
-            if(fundTransferStatus == null) {
+            if (fundTransferStatus == null) {
                 fundTransferStatus = new FundTransferStatus() {
                     TransactionId = transactionId,
                     Status = transactionStatus,
@@ -123,7 +122,21 @@ namespace Acesso.Application.Bank.Service {
                 fundTransferStatus.Status = transactionStatus;
                 fundTransferStatus.Message = message;
                 _fundTransferRepository.Replace(fundTransferStatus);
-            }            
+            }
+        }
+
+        private async Task<AccountGetRequestVM> GetAccount(string accountNumber) {
+
+            try {
+                return await _accountHttpClientService.Get(accountNumber);                    
+            } catch (HttpRequestException httpEx) {
+                if (httpEx.StatusCode == System.Net.HttpStatusCode.NotFound) throw new Exception($"Invalid account number: {accountNumber}");
+                throw;
+            } 
+        }
+
+        public FundTransferStatus GetFundTransferStatus(string transactionId) {
+            return _fundTransferRepository.GetByTransactionId(transactionId);
         }
 
         private string GenerateTransactionId() {

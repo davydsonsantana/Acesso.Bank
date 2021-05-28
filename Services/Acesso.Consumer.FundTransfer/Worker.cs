@@ -26,16 +26,17 @@ namespace Acesso.Consumer.FundTransfer {
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken) {
-                        
-            try {
-                _logger.LogInformation("Acesso.Consumer.FundTransfer Started: {time}", DateTimeOffset.Now);
-                _fundTransfer.ProcessFundTransferQueue();
-            }catch (Exception ex) {
 
-            }
+            _logger.LogInformation("Acesso.Consumer.FundTransfer Started: {time}", DateTimeOffset.Now);
+            for (int i = 0; i < 10; i++) ThreadPool.QueueUserWorkItem(Job);
+
+        }
+
+        protected void Job(object state) {
+            _fundTransfer.ProcessFundTransferQueue();
+        }
 
 
-        }        
-    
+
     }
 }

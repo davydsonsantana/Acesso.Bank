@@ -25,9 +25,10 @@ namespace Acesso.Infra.CrossCutting.IoC {
                 DbUser = Configuration["MongoDbSettings:DbUser"],
                 DbPass = Configuration["MongoDbSettings:DbPass"]
             };
-
+            //services.Configure<IMongoDbSettings>(x => Configuration.GetSection("MongoDbSettings"));
+            //services.AddSingleton<IMongoDbSettings>(x => x.GetRequiredService<IOptions<MongoDbSettings>>().Value);
             services.AddSingleton<IMongoDbSettings>(x => mongoSettings);            
-            services.AddSingleton(typeof(IMongoRepository<>), typeof(MongoRepository<>));
+            services.AddSingleton(typeof(IMongoRepository<>), typeof(MongoRepository<>));            
 
             // Application
             services.AddSingleton<IAccountService, AccountService>();

@@ -1,4 +1,5 @@
 ﻿using Acesso.Application.Bank.ViewModel;
+using Acesso.Domain.Bank.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace Acesso.Application.Bank.Interface {
         FundTransferResultVM SendTransferRequestToQueue(FundTransferRequestVM fundTransferVM);
 
         void ProcessFundTransferQueue();
+
+        FundTransferStatus GetFundTransferStatus(string transactionId);
 
     }
 }

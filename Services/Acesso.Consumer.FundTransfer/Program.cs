@@ -20,7 +20,7 @@ namespace Acesso.Consumer.FundTransfer {
                     // DI Abstraction
                     services.AddDependencyInjectionConfiguration(hostContext.Configuration);
 
-                    services.AddHostedService<Worker>();
+                    services.AddHostedService<Worker>();                    
                 });
     }
 }
