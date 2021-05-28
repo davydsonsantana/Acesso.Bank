@@ -20,9 +20,14 @@ namespace Acesso.Application.Bank.Service {
             _httpClient = httpClient;
         }
                 
-        public async Task<AccountVM> Get(string accountNumber) {
+        public async Task<AccountGetRequestVM> Get(string accountNumber) {
             string url = "http://services.accountapi/api/Account/" + accountNumber;
-            return await _httpClient.GetFromJsonAsync<AccountVM>(url);
+            return await _httpClient.GetFromJsonAsync<AccountGetRequestVM>(url);
+        }
+
+        public async Task<HttpResponseMessage> TransactionRequest(BalanceAdjustmentRequestVM transaction) {
+            string url = "http://services.accountapi/api/Account/";
+            return await _httpClient.PostAsJsonAsync<BalanceAdjustmentRequestVM>(url, transaction);
         }
 
         public void Dispose() {

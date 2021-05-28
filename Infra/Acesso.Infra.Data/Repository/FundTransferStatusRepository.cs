@@ -17,7 +17,11 @@ namespace Acesso.Infra.Data.Repository {
         }
 
         public void Add(FundTransferStatus fundTransferStatus) {
-            _fundTransferStatus.InsertOne(fundTransferStatus);
+            _fundTransferStatus.InsertOne(fundTransferStatus);            
+        }
+
+        public void Replace(FundTransferStatus fundTransferStatus) {
+            _fundTransferStatus.ReplaceOne(fundTransferStatus);
         }
 
         public FundTransferStatus GetByTransactionId(string transactionId) {
